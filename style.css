@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #faf8ef;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 48px;
+    color: #776e65;
+}
+
+.score-container {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    display: inline-block;
+    background-color: #bbada0;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.grid-row {
+    display: flex;
+}
+
+.grid-cell {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-color: #cdc1b4;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #776e65;
+}
+
+.hidden {
+    display: none;
+}
+
+#game-over, #you-win {
+    font-size: 48px;
+    font-weight: bold;
+    color: #776e65;
+    margin-top: 20px;
+}
+
+.btn-container {
+    width: 470px;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #8f7a66;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #9f8b77;
+}
+
+button:active {
+    background-color: #7f6a56;
+}
+
+/* Colori per i vari numeri */
+.cell-2 { background-color: #eee4da; }
+.cell-4 { background-color: #ede0c8; }
+.cell-8 { background-color: #f2b179; color: #f9f6f2; }
+.cell-16 { background-color: #f59563; color: #f9f6f2; }
+.cell-32 { background-color: #f67c5f; color: #f9f6f2; }
+.cell-64 { background-color: #f65e3b; color: #f9f6f2; }
+.cell-128 { background-color: #edcf72; color: #f9f6f2; }
+.cell-256 { background-color: #edcc61; color: #f9f6f2; }
+.cell-512 { background-color: #edc850; color: #f9f6f2; }
+.cell-1024 { background-color: #edc53f; color: #f9f6f2; }
+.cell-2048 { background-color: #edc22e; color: #f9f6f2; }
