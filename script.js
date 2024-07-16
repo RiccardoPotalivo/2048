@@ -2,6 +2,13 @@ let grid = Array(4).fill().map(() => Array(4).fill(0));
 let isGameEnded = false;
 let score = 0;
 
+// sound effects
+function playMergeSound() {
+    const sound = document.getElementById('mergeSound');
+    sound.currentTime = 0;  // Riavvolge l'audio all'inizio
+    sound.play().catch(e => console.log("Audio play failed:", e));
+}
+
 function generateNumber() {
     let emptyCells = [];
     for (let i = 0; i < 4; i++) {
@@ -18,7 +25,10 @@ function generateNumber() {
 }
 
 function move(direction) {
+    if (isGameEnded) return false;
     let moved = false;
+    let merged = false;
+
     if (direction === 'left' || direction === 'right') {
         for (let i = 0; i < 4; i++) {
             let row = grid[i];
@@ -30,6 +40,7 @@ function move(direction) {
                         score += newRow[j];
                         newRow.splice(j+1, 1);
                         moved = true;
+                        merged = true;
                     }
                 }
                 while (newRow.length < 4) newRow.push(0);
@@ -40,6 +51,7 @@ function move(direction) {
                         score += newRow[j];
                         newRow.splice(j-1, 1);
                         moved = true;
+                        merged = true;
                     }
                 }
                 while (newRow.length < 4) newRow.unshift(0);
@@ -58,6 +70,7 @@ function move(direction) {
                         score += newColumn[i];
                         newColumn.splice(i+1, 1);
                         moved = true;
+                        merged = true;
                     }
                 }
                 while (newColumn.length < 4) newColumn.push(0);
@@ -68,6 +81,7 @@ function move(direction) {
                         score += newColumn[i];
                         newColumn.splice(i-1, 1);
                         moved = true;
+                        merged = true;
                     }
                 }
                 while (newColumn.length < 4) newColumn.unshift(0);
@@ -78,14 +92,15 @@ function move(direction) {
             }
         }
     }
-    if (moved) {
-        generateNumber();
-    }
 
     if (moved) {
         setTimeout(() => {
             generateNumber();
             updateUI();
+
+            if (merged) {
+                playMergeSound();
+            }
             if (hasWon()) {
                 document.getElementById('you-win').classList.remove('hidden');
                 isGameEnded = true;
