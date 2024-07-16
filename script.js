@@ -1,4 +1,5 @@
 let grid = Array(4).fill().map(() => Array(4).fill(0));
+let isGameEnded = false;
 let score = 0;
 
 function generateNumber() {
@@ -80,15 +81,17 @@ function move(direction) {
     if (moved) {
         generateNumber();
     }
-    
+
     if (moved) {
         setTimeout(() => {
             generateNumber();
             updateUI();
             if (hasWon()) {
                 document.getElementById('you-win').classList.remove('hidden');
+                isGameEnded = true;
             } else if (isGameOver()) {
                 document.getElementById('game-over').classList.remove('hidden');
+                isGameEnded = true;
             }
         }, 150);
     }
@@ -186,12 +189,41 @@ function resetGame() {
     stopAutoPlay();
     grid = Array(4).fill().map(() => Array(4).fill(0));
     score = 0;
+    isGameEnded = false;
     document.getElementById('game-over').classList.add('hidden');
     document.getElementById('you-win').classList.add('hidden');
     init();
 }
 
 document.getElementById('reset-button').addEventListener('click', resetGame);
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && isGameEnded) {
+        resetGame();
+        return;
+    }
+
+    if (isGameEnded) return;
+
+    let moved = false;
+    switch(event.key) {
+        case 'ArrowLeft':
+            moved = move('left');
+            break;
+        case 'ArrowRight':
+            moved = move('right');
+            break;
+        case 'ArrowUp':
+            moved = move('up');
+            break;
+        case 'ArrowDown':
+            moved = move('down');
+            break;
+    }
+    if (moved) {
+        updateUI();
+    }
+});
 
 // Autoplay
 
@@ -204,7 +236,7 @@ function startAutoPlay() {
     autoPlayInterval = setInterval(() => {
         document.dispatchEvent(new KeyboardEvent('keydown', { key: directions[index] }));
         index = (index + 1) % directions.length;
-    }, 10); // Cambia la direzione ogni 500 ms
+    }, 500); // Cambia la direzione ogni 500 ms
 }
 
 function stopAutoPlay() {
