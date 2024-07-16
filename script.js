@@ -80,6 +80,18 @@ function move(direction) {
     if (moved) {
         generateNumber();
     }
+    
+    if (moved) {
+        setTimeout(() => {
+            generateNumber();
+            updateUI();
+            if (hasWon()) {
+                document.getElementById('you-win').classList.remove('hidden');
+            } else if (isGameOver()) {
+                document.getElementById('game-over').classList.remove('hidden');
+            }
+        }, 150);
+    }
     return moved;
 }
 
@@ -107,11 +119,33 @@ function updateUI() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             let cell = document.getElementById(`cell-${i}-${j}`);
-            cell.textContent = grid[i][j] || '';
-            cell.className = `grid-cell cell-${grid[i][j]}`;
+            let newValue = grid[i][j];
+            let oldValue = parseInt(cell.textContent) || 0;
+
+            if (newValue !== oldValue) {
+                if (newValue !== 0) {
+                    cell.textContent = newValue;
+                    cell.className = `grid-cell cell-${newValue}`;
+                    if (oldValue === 0) {
+                        cell.classList.add('cell-new');
+                    } else {
+                        cell.classList.add('cell-merged');
+                    }
+                } else {
+                    cell.textContent = '';
+                    cell.className = 'grid-cell';
+                }
+            }
         }
     }
     document.getElementById('score').textContent = score;
+
+    // Rimuovi le classi di animazione dopo un breve ritardo
+    setTimeout(() => {
+        document.querySelectorAll('.cell-new, .cell-merged').forEach(cell => {
+            cell.classList.remove('cell-new', 'cell-merged');
+        });
+    }, 200);
 }
 
 function init() {
