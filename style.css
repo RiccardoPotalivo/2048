@@ -84,6 +84,29 @@ button:active {
     background-color: #7f6a56;
 }
 
+.grid-cell {
+    transition: all 0.15s ease;
+}
+
+@keyframes appear {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.cell-new {
+    animation: appear 0.2s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.cell-merged {
+    animation: pop 0.2s ease;
+}
+
 /* Colori per i vari numeri */
 .cell-2 { background-color: #eee4da; }
 .cell-4 { background-color: #ede0c8; }
