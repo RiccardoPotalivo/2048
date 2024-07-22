@@ -210,21 +210,25 @@ let touchEndY = 0;
 document.addEventListener('touchstart', function(event) {
     touchStartX = event.changedTouches[0].screenX;
     touchStartY = event.changedTouches[0].screenY;
+    // Previeni l'azione predefinita del browser per il touchstart
+    event.preventDefault();
 }, false);
 
 document.addEventListener('touchend', function(event) {
     touchEndX = event.changedTouches[0].screenX;
     touchEndY = event.changedTouches[0].screenY;
     handleSwipe();
+    // Previeni l'azione predefinita del browser per il touchend
+    event.preventDefault();
 }, false);
 
 function handleSwipe() {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
-    const minSwipeDistance = 50; // Minimum distance for a swipe
+    const minSwipeDistance = 50; // Distanza minima per considerare uno swipe
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // Horizontal swipe
+        // Swipe orizzontale
         if (Math.abs(deltaX) > minSwipeDistance) {
             if (deltaX > 0) {
                 move('right');
@@ -233,7 +237,7 @@ function handleSwipe() {
             }
         }
     } else {
-        // Vertical swipe
+        // Swipe verticale
         if (Math.abs(deltaY) > minSwipeDistance) {
             if (deltaY > 0) {
                 move('down');
