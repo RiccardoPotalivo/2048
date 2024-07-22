@@ -172,6 +172,8 @@ function init() {
     updateUI();
 }
 
+// Comandi Pc
+
 document.addEventListener('keydown', (event) => {
     let moved = false;
     switch(event.key) {
@@ -198,10 +200,54 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// Comandi Smartphone
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', function(event) {
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+}, false);
+
+document.addEventListener('touchend', function(event) {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+    handleSwipe();
+}, false);
+
+function handleSwipe() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const minSwipeDistance = 50; // Minimum distance for a swipe
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe
+        if (Math.abs(deltaX) > minSwipeDistance) {
+            if (deltaX > 0) {
+                move('right');
+            } else {
+                move('left');
+            }
+        }
+    } else {
+        // Vertical swipe
+        if (Math.abs(deltaY) > minSwipeDistance) {
+            if (deltaY > 0) {
+                move('down');
+            } else {
+                move('up');
+            }
+        }
+    }
+}
+
 //New Game
 
 function resetGame() {
-    stopAutoPlay();
+    // stopAutoPlay();
     grid = Array(4).fill().map(() => Array(4).fill(0));
     score = 0;
     isGameEnded = false;
@@ -240,26 +286,65 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// Disabilita lo zoom 
+
+document.addEventListener('touchmove', function (event) {
+    if (event.scale !== 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, false);
+
+// Funzioni di gioco per pc e smartphone
+
+// function move(direction) {
+//     if (isGameEnded) return false;
+//     let moved = false;
+    
+//     // Logica di movimento esistente...
+
+//     if (moved) {
+//         setTimeout(() => {
+//             generateNumber();
+//             updateUI();
+//             if (hasWon()) {
+//                 document.getElementById('you-win').classList.remove('hidden');
+//                 isGameEnded = true;
+//             } else if (isGameOver()) {
+//                 document.getElementById('game-over').classList.remove('hidden');
+//                 isGameEnded = true;
+//             }
+//         }, 150);
+//     }
+//     return moved;
+// }
+
 // Autoplay
 
-let autoPlayInterval;
+// let autoPlayInterval;
 
-function startAutoPlay() {
-    const directions = ['ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown'];
-    let index = 0;
+// function startAutoPlay() {
+//     const directions = ['ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown'];
+//     let index = 0;
 
-    autoPlayInterval = setInterval(() => {
-        document.dispatchEvent(new KeyboardEvent('keydown', { key: directions[index] }));
-        index = (index + 1) % directions.length;
-    }, 500); // Cambia la direzione ogni 500 ms
-}
+//     autoPlayInterval = setInterval(() => {
+//         document.dispatchEvent(new KeyboardEvent('keydown', { key: directions[index] }));
+//         index = (index + 1) % directions.length;
+//     }, 500); // Cambia la direzione ogni 500 ms
+// }
 
-function stopAutoPlay() {
-    clearInterval(autoPlayInterval);
-}
+// function stopAutoPlay() {
+//     clearInterval(autoPlayInterval);
+// }
 
-// Chiama startAutoPlay() per iniziare il gioco automatico
-// Chiama stopAutoPlay() per fermarlo
 
 
 init();
