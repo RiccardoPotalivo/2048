@@ -251,7 +251,6 @@ function handleSwipe() {
 //New Game
 
 function resetGame() {
-    // stopAutoPlay();
     grid = Array(4).fill().map(() => Array(4).fill(0));
     score = 0;
     isGameEnded = false;
@@ -261,6 +260,7 @@ function resetGame() {
 }
 
 document.getElementById('reset-button').addEventListener('click', resetGame);
+document.getElementById('reset-button').addEventListener('touchend', resetGame);
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && isGameEnded) {
@@ -292,20 +292,20 @@ document.addEventListener('keydown', (event) => {
 
 // Disabilita lo zoom 
 
-document.addEventListener('touchmove', function (event) {
-    if (event.scale !== 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
+// document.addEventListener('touchmove', function (event) {
+//     if (event.scale !== 1) {
+//         event.preventDefault();
+//     }
+// }, { passive: false });
 
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
+// let lastTouchEnd = 0;
+// document.addEventListener('touchend', function (event) {
+//     const now = (new Date()).getTime();
+//     if (now - lastTouchEnd <= 300) {
+//         event.preventDefault();
+//     }
+//     lastTouchEnd = now;
+// }, false);
 
 // Funzioni di gioco per pc e smartphone
 
@@ -313,8 +313,6 @@ document.addEventListener('touchend', function (event) {
 //     if (isGameEnded) return false;
 //     let moved = false;
     
-//     // Logica di movimento esistente...
-
 //     if (moved) {
 //         setTimeout(() => {
 //             generateNumber();
@@ -330,25 +328,6 @@ document.addEventListener('touchend', function (event) {
 //     }
 //     return moved;
 // }
-
-// Autoplay
-
-// let autoPlayInterval;
-
-// function startAutoPlay() {
-//     const directions = ['ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown'];
-//     let index = 0;
-
-//     autoPlayInterval = setInterval(() => {
-//         document.dispatchEvent(new KeyboardEvent('keydown', { key: directions[index] }));
-//         index = (index + 1) % directions.length;
-//     }, 500); // Cambia la direzione ogni 500 ms
-// }
-
-// function stopAutoPlay() {
-//     clearInterval(autoPlayInterval);
-// }
-
 
 
 init();
