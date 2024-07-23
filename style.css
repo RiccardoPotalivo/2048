@@ -23,6 +23,7 @@ h1 {
 }
 
 .grid-container {
+    position: relative;
     display: inline-block;
     background-color: #bbada0;
     border-radius: 6px;
@@ -35,7 +36,7 @@ h1 {
 
 .grid-cell {
     width: 100px;
-    height: 100px;
+    aspect-ratio: 1;
     margin: 5px;
     background-color: #cdc1b4;
     border-radius: 3px;
@@ -45,6 +46,22 @@ h1 {
     font-size: 36px;
     font-weight: bold;
     color: #776e65;
+}
+
+@media (max-width: 480px) {
+    body {
+        align-items: start;
+        padding-top: 3rem;
+    }
+    .grid-container {
+        padding: 10px;
+    }
+
+    .grid-cell {
+        width: 75px;
+        margin: 4px;
+        font-size: 24px;
+    }
 }
 
 .hidden {
@@ -83,16 +100,16 @@ button:hover {
 button:active {
     background-color: #7f6a56;
 }
-
+/* 
 .grid-cell {
     transition: all 0.15s ease;
-}
+} */
 
-@keyframes appear {
+/* @keyframes appear {
     0% { opacity: 0; transform: scale(0); }
     100% { opacity: 1; transform: scale(1); }
-}
-
+} */
+/* 
 .cell-new {
     animation: appear 0.2s ease;
 }
@@ -101,11 +118,16 @@ button:active {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
-}
+} */
 
 .cell-merged {
     animation: pop 0.2s ease;
 }
+
+/* .cell-animated {
+    transition: all 0.25s ease-in-out;
+    z-index: 10;
+} */
 
 /* Colori per i vari numeri */
 .cell-2 { background-color: #eee4da; }
