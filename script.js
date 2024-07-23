@@ -208,19 +208,24 @@ let touchEndX = 0;
 let touchEndY = 0;
 
 document.addEventListener('touchstart', function(event) {
-    touchStartX = event.changedTouches[0].screenX;
-    touchStartY = event.changedTouches[0].screenY;
-    // Previeni l'azione predefinita del browser per il touchstart
-    event.preventDefault();
-}, false);
+    // console.log(event.target.id);
+    if (event.target.id !== 'game-over') {
+        touchStartX = event.changedTouches[0].screenX;
+        touchStartY = event.changedTouches[0].screenY;
+        // Previeni l'azione predefinita del browser per il touchstart
+        event.preventDefault();
+    }
+}, { passive: false });
 
 document.addEventListener('touchend', function(event) {
-    touchEndX = event.changedTouches[0].screenX;
-    touchEndY = event.changedTouches[0].screenY;
-    handleSwipe();
-    // Previeni l'azione predefinita del browser per il touchend
-    event.preventDefault();
-}, false);
+    if (event.target.id !== 'game-over') {
+        touchEndX = event.changedTouches[0].screenX;
+        touchEndY = event.changedTouches[0].screenY;
+        handleSwipe();
+        // Previeni l'azione predefinita del browser per il touchend
+        event.preventDefault();
+    }
+}, { passive: false });
 
 function handleSwipe() {
     const deltaX = touchEndX - touchStartX;
@@ -260,7 +265,11 @@ function resetGame() {
 }
 
 document.getElementById('reset-button').addEventListener('click', resetGame);
-document.getElementById('reset-button').addEventListener('touchend', resetGame);
+document.getElementById('reset-button').addEventListener('touchend', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    resetGame();
+}, { passive: false });
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && isGameEnded) {
