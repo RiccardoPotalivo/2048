@@ -1,5 +1,5 @@
-# Regole del Gioco 2048 
-[Clicca qui per giocare] (https://riccardopotalivo.github.io/2048/) 
+# Regole del Gioco 2048  
+[https://riccardopotalivo.github.io/2048/] (Clicca qui per giocare) 
 ## Descrizione
 2048 è un popolare gioco di puzzle in cui l'obiettivo è combinare le tessere numeriche per raggiungere il numero 2048. Ecco una descrizione dettagliata delle regole del gioco:
 
